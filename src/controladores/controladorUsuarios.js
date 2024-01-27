@@ -1,4 +1,3 @@
-import { response } from 'express';
 import ModeloUsuario from '../modelos/modeloUsuario.js';
 
 const ControladorUsuarios = {
