@@ -4,13 +4,12 @@ import ModeloUsuario from "../modelos/modeloUsuario.js";
 const ControladorUsuarios = {
   crearUsuario: async (solicitud, respuesta) => {
     try {
-      const { username, password, nombre, cc } = solicitud.body;
+      const { username, password, nombre,} = solicitud.body;
       const hashPassword = await bcrypt.hash(password, 10);
       const nuevoUsuario = new ModeloUsuario({
         username,
         password: hashPassword,
         nombre,
-        cc,
       });
       const usuarioCreado = await nuevoUsuario.save();
       if (usuarioCreado._id) {

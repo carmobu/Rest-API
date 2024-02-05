@@ -5,7 +5,7 @@ const esquemaUsuario = new Schema(
         username: { type: String, required: true},
         password: {type: String, required: true},
         nombre: {type: String, required: true},
-        cc: { type: String, required: true},        
+                
     },
     { versionKey: false, timestamps: true }
 );
