@@ -2,9 +2,9 @@ import { Schema, model } from 'mongoose';
 
 const esquemaRegalo = new Schema(
   {
-    destinatario: { type: String, required: true },
-    nombre: { type: String, required: true },
-    entregado: { type: Boolean, required: true },
+    id: { type: String, required: true },
+    peso: { type: String, required: true },
+    nota: { type: String, required: true },
   },
   { versionKey: false, timestamps: true }
 );

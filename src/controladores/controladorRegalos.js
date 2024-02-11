@@ -9,8 +9,8 @@ const ControladorRegalos = {
       if (regaloCreado._id) {
         respuesta.json({
           resultado: 'bien',
-          mensaje: 'regalo creado',
-          datos: regaloCreado._id,
+          mensaje: 'registo creado creado',
+          datos: regaloCreado.id,
         });
       }
     } catch (error) {
@@ -28,7 +28,8 @@ const ControladorRegalos = {
       for (let i = 0; i < todosLosRegalos.length; i++) {
         const objeto = {
           id: todosLosRegalos[i]._id,
-          destinatario: todosLosRegalos[i].destinatario,
+          peso: todosLosRegalos[i].peso,
+          nota: todosLosRegalos[i].nota,
         };
         regalos.push(objeto);
       }
@@ -47,21 +48,30 @@ const ControladorRegalos = {
   },
   leerRegalo: async (solicitud, respuesta) => {
     try {
-      const regalo = await ModeloRegalo.findById(solicitud.params.id);
-      respuesta.json({
-        resultado: 'bien',
-        mensaje: 'regalo leido',
-        datos: {
-          id: regalo._id,
-          destinatario: regalo.destinatario,
-          nombre: regalo.nombre,
-          entregado: regalo.entregado,
-        },
-      });
+      const id = solicitud.params.id;
+      const regalos = await ModeloRegalo.find({ id: id }); // Consulta para encontrar los regalos con el mismo ID
+      if (regalos.length === 0) {
+        respuesta.json({
+          resultado: 'mal',
+          mensaje: 'No se encontraron regalos con ese ID',
+          datos: null,
+        });
+      } else {
+        respuesta.json({
+          resultado: 'bien',
+          mensaje: 'Regalo(s) leído(s)',
+          datos: regalos.map(regalo => ({
+            id: regalo._id,
+            fecha: regalo.createdAt.toLocaleString(),
+            peso: regalo.peso,
+            nota: regalo.nota,
+          })),
+        });
+      }
     } catch (error) {
       respuesta.json({
         resultado: 'mal',
-        mensaje: 'ocurrió un error',
+        mensaje: 'Ocurrió un error',
         datos: error,
       });
     }

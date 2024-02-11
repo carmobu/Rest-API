@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import ModeloUsuario from "../modelos/modeloUsuario.js";
-import generarToken from "../helpers/funciones.js";
+import {generarToken, verificarToken} from "../helpers/funciones.js";
 
 const ControladorSesion = {
   loguearUsuario: async (solicitud, respuesta) => {
@@ -19,25 +19,47 @@ const ControladorSesion = {
           });
           respuesta.json({
             mensaje: "Usuario logueado correctamente",
-            token: token,
+            datos: token,
           });
         } else {
-          respuesta.status(401).json({
+            respuesta.json({
             mensaje: "efe",
           });
         }
       } else {
-        respuesta.status(404).json({
+        respuesta.json({
           mensaje: "efe",
         });
       }
     } catch (error) {
-      respuesta.status(500).json({
+      respuesta.json({
         mensaje: "Error en el servidor",
         error: error.message,
       });
     }
   },
+
+  validarToken: async (solicitud, respuesta) => {
+    try {
+      const token = solicitud.params.token;
+      const decodificado = await verificarToken(token);
+      console.log(decodificado);
+      if (decodificado.id) {
+        respuesta.json({
+          resultado: 'bien',
+          mensaje: 'valido',
+          datos: decodificado,
+        });
+      }
+    } catch (error) {
+      respuesta.json({
+        resultado: 'mal',
+        mensaje: 'ocurrio un error',
+        datos: error
+      });
+      
+    }
+  }
 };
 
 export default ControladorSesion;
