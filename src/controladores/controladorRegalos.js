@@ -65,6 +65,10 @@ const ControladorRegalos = {
             fecha: regalo.createdAt.toLocaleString(),
             peso: regalo.peso,
             nota: regalo.nota,
+            biceps: regalo.biceps,
+            cintura: regalo.cintura,
+            muslos: regalo.muslos,
+            cadera: regalo.cadera,
           })),
         });
       }
